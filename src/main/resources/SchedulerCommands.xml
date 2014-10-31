@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by zhouzhiying (PKU) -->
+<!-- 注意：command的名字一定不为空，否则无法正确使用日志和Context -->
+<scheduler>
+
+
+ <!-- download push delete -->
+ <!-- 
+ 
+  -->
+<!-- 
+  <command name="downloadCommand">
+    <task>
+      <ref-class>com.travelsky.task.downloadtask.SchedulerDownloadTask</ref-class>
+      <description>download</description>
+    </task>
+    <iterator>
+      <ref-class>com.travelsky.pub.util.scheduling.iterators.PeriodsIterator</ref-class>
+      <parameter>
+        <startTime>
+          <year>2014</year>
+          <month>1</month>
+          <day>6</day>
+          <hour>13</hour>
+          <minute>30</minute>
+          <second>0</second>
+        </startTime>
+        <endTime>
+          <year>3014</year>
+          <month>10</month>
+          <day>31</day>
+          <hour>12</hour>
+          <minute>0</minute>
+          <second>0</second>
+        </endTime>
+        <period type="second">30</period>
+      </parameter>
+      <description>times space</description>
+    </iterator>
+  </command>
+ -->
+  <command name="pushDataCommand">
+    <task>
+      <ref-class>com.travelsky.task.pushtask.SchedulerPushTask</ref-class>
+      <description>push task</description>
+    </task>
+    <iterator>
+      <ref-class>com.travelsky.pub.util.scheduling.iterators.PeriodsIterator</ref-class>
+      <parameter>
+        <startTime>
+          <year>2014</year>
+          <month>1</month>
+          <day>6</day>
+          <hour>13</hour>
+          <minute>30</minute>
+          <second>0</second>
+        </startTime>
+        <endTime>
+          <year>3014</year>
+          <month>10</month>
+          <day>31</day>
+          <hour>12</hour>
+          <minute>0</minute>
+          <second>0</second>
+        </endTime>
+        <period type="second">30</period>
+      </parameter>
+      <description>time period</description>
+    </iterator>
+  </command>
+<!-- 
+  <command name="deleteDataCommand">
+    <task>
+      <ref-class>com.travelsky.task.delinvalidtask.SchedulerDeleteTask</ref-class>
+      <description>delete task</description>
+    </task>
+    <iterator>
+      <ref-class>com.travelsky.pub.util.scheduling.iterators.CustomDaysIterator</ref-class>
+      <parameter>
+      	<times>095000</times>
+		<date>
+			<year>2005</year>
+			<month>2</month>
+			<day>1</day>
+			<hour>0</hour>
+			<minute>0</minute>
+			<second>0</second>
+		</date>
+		</parameter>
+      <description>time period</description>
+    </iterator>
+  </command>
+       --> 
+</scheduler>
+

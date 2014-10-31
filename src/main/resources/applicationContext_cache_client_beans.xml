@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"> 
+    
+    
+    <bean id="remoteCacheUtil" class="com.travelsky.cache.utils.RemoteCacheUtil">  
+		<property name="clientSocketFactory" ref="rmiClientSocketFactory"/>
+		<property name="remoteCacheManagerTimeOut" value="3600"/>
+		<property name="zombieCahceManagerTimeOut" value="30"/>
+	</bean>  
+    
+	<bean id="ROCacheManager" class="com.travelsky.cache.client.impl.ROCacheManagerImpl">  
+		<!--property name="serviceUrl"> <value>rmi://127.0.0.1:1199/cacheService</value></property-->
+		
+		<property name="serviceUrl"> <value>rmi://10.6.159.94:1199/cacheService</value></property>
+		<!--property name="serviceUrl"> <value>rmi://10.6.141.237:1199/cacheService</value></property-->
+		<property name="clientId" value="mf_b2b_002"/>
+		<property name="remoteCacheUtil" ref="remoteCacheUtil"/>
+	</bean>   
+
+	<bean id="localCacheManager" class="com.travelsky.cache.vendor.jcs.JcsCacheManagerImpl">
+		<property name="cacheName" value="ebcache"/>
+	</bean>    
+	
+	<bean id="localCacheServiceExporter" class="org.springframework.remoting.rmi.RmiServiceExporter">     
+		<property name="serviceName" value="cacheService"/>     
+		<property name="service" ref="localCacheManager"/>     
+		<property name="serviceInterface" value="com.travelsky.cache.ICacheManager"/>     
+		<property name="registryPort" value="4006"/>   
+		<property name="clientSocketFactory" ref="rmiClientSocketFactory"/>
+		<property name="serverSocketFactory" ref="rmiServerSocketFactory"/>    
+	</bean>
+	
+	<bean id="rmiClientSocketFactory" class="com.travelsky.cache.factory.RMICustomClientSocketFactory">   
+        <property name="soTimeout" value="5000"></property>
+        <property name="connectionTimeout" value="1000"></property>
+    </bean> 
+
+	<bean id="rmiServerSocketFactory" class="com.travelsky.cache.factory.RMICustomServerSocketFactory">   
+        <property name="timeout" value="0"></property>
+        <property name="dataPort" value="0"></property>
+    </bean> 
+	
+	<bean id="LOCacheManager" class="com.travelsky.cache.client.impl.LOCacheManagerImpl">    
+		<property name="lcm"> <ref local="localCacheManager"/> </property> 
+	</bean>
+	
+    <bean id="LFCacheManager" class="com.travelsky.cache.client.impl.LFCacheManagerImpl">     
+		<!--property name="serviceUrl"> <value>rmi://10.6.141.237:1199/cacheService</value></property-->
+		<property name="serviceUrl"> <value>rmi://10.6.159.94:1199/cacheService</value></property>
+		<!-- <property name="serviceUrl"> <value>rmi://10.6.159.94:1199/cacheService</value></property> -->
+		<!--property name="serviceUrl"> <value>rmi://127.0.0.1:1199/cacheService</value></property-->
+		<property name="lcm"> <ref local="localCacheManager"/> </property>
+		<property name="clientId" value="mf_b2b_002"/>	
+		<property name="remoteCacheUtil" ref="remoteCacheUtil"/>
+	</bean>   
+	
+</beans>
